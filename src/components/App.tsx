@@ -40,9 +40,8 @@ const ToDoItem = ({ todo }: ToDoItemProps) => {
   const [isDone, setIsDone] = useState(todo.done);
 
   const handleToDoCheck = (event: React.FormEvent) => {
-    if (!todo.done) {
-      todo.dateDone = Date.now();
-    }
+    // even if we're undoing a task, it's OK to update the date. It will be overwritten anyway when we recheck.
+    todo.dateDone = Date.now();
     setIsDone(!isDone);
   };
   return (
