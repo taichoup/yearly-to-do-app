@@ -1,17 +1,21 @@
 import './App.css';
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState } from 'react';
+import { ToDoForm } from './ToDoForm';
+import { ToDoItem } from './ToDoItem';
 
-interface YearlyToDo {
+export interface YearlyToDo {
   displayName: string;
   done: boolean;
   dateDone?: string | number | Date;
   doneBy?: string;
+  recurrenceStepInYears?: number;
 }
 
 const toDosExampleSet: YearlyToDo[] = [
   {
     displayName: 'Nettoyer la gouttière',
     done: false,
+    recurrenceStepInYears: 1,
   },
   {
     displayName: 'Javéliser les WC',
@@ -20,113 +24,27 @@ const toDosExampleSet: YearlyToDo[] = [
   {
     displayName: 'Nettoyer la VMC',
     done: true,
-    dateDone: 1619875991,
+    dateDone: 1621034001000,
     doneBy: 'Christine',
   },
   {
     displayName: "nettoyer la vitre de l'insert",
     done: false,
   },
+  {
+    displayName: 'nettoyer les poubelles',
+    done: false,
+  },
+  {
+    displayName: 'faire tailler la haie (cyprès)',
+    done: false,
+    recurrenceStepInYears: 5,
+  },
+  {
+    displayName: 'vider le compost',
+    done: false,
+  },
 ];
-
-type ToDoItemProps = {
-  todo: YearlyToDo;
-};
-
-/**
- * This is an item in the list
- */
-const ToDoItem = ({ todo }: ToDoItemProps) => {
-  const [isDone, setIsDone] = useState(todo.done);
-
-  const handleToDoCheck = (event: React.FormEvent) => {
-    // even if we're undoing a task, it's OK to update the date. It will be overwritten anyway when we recheck.
-    todo.dateDone = Date.now();
-    setIsDone(!isDone);
-  };
-  return (
-    <li>
-      <input
-        type="checkbox"
-        checked={isDone}
-        onChange={handleToDoCheck}
-      ></input>
-      {todo.displayName}
-      {isDone && (
-        // ?? 0 --> hack
-        <span className="date">
-          {new Date(todo.dateDone ?? 0).toDateString()}
-        </span>
-      )}
-    </li>
-  );
-};
-
-type ToDoFormProps = {
-  submitHandler: (newTodo: YearlyToDo) => void;
-  closeFormHandler: Dispatch<SetStateAction<boolean>>;
-};
-
-/**
- * This is the form component to add a new ToDo
- */
-const ToDoForm = ({ submitHandler, closeFormHandler }: ToDoFormProps) => {
-  const [displayName, setDisplayName] = useState('');
-  const [done, setDone] = useState(false);
-  const [dateDone, setDateDone] = useState();
-
-  const handleDisplayNameChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setDisplayName(event.currentTarget.value);
-  };
-
-  const handleDoneChange = (event: React.FormEvent<HTMLInputElement>): void => {
-    // true if checked, false if unchecked
-    setDone(event.currentTarget.checked);
-  };
-
-  const clearState = () => {
-    setDisplayName('');
-    setDone(false);
-    setDateDone(undefined);
-  };
-
-  const handleSubmit = (event: React.FormEvent): void => {
-    event.preventDefault();
-    const newTodo: YearlyToDo = {
-      displayName,
-      done,
-      dateDone: Date.now(),
-      doneBy: 'Manu',
-    };
-    submitHandler(newTodo);
-    closeFormHandler(false);
-    clearState();
-  };
-
-  return (
-    <form className="add-todo-form">
-      <label htmlFor="displayName">Display name</label>
-      <input
-        type="text"
-        onChange={handleDisplayNameChange}
-        id="displayName"
-        value={displayName}
-      />
-      <label htmlFor="done">Done?</label>
-      <input
-        type="checkbox"
-        onChange={handleDoneChange}
-        id="done"
-        checked={done}
-      />
-      <button type="submit" onClick={handleSubmit}>
-        OK
-      </button>
-    </form>
-  );
-};
 
 function App() {
   const [yearlyToDos, setYearlyToDos] = useState<YearlyToDo[]>(toDosExampleSet);
@@ -147,21 +65,23 @@ function App() {
           <ToDoItem todo={todo} key={todo.displayName} />
         ))}
       </ul>
-      <button type="button" onClick={handleAddNewToDo}>
-        Add a new task
+      <button type="button" onClick={handleAddNewToDo} className='add-todo-button'>
+        Ajouter une tâche récurrente
       </button>
-      <div
-        className={
-          addToDoDialogShown
-            ? 'add-todo-dialog-visible'
-            : 'add-todo-dialog-hidden'
-        }
-      >
-        <ToDoForm
-          submitHandler={handleValidateNewToDo}
-          closeFormHandler={setAddToDoDialogShown}
-        />
-        <button onClick={() => setAddToDoDialogShown(false)}>Close</button>
+      <div className="add-todo-dialog-wrapper">
+        <div
+          className={
+            addToDoDialogShown
+              ? 'add-todo-dialog-visible'
+              : 'add-todo-dialog-hidden'
+          }
+        >
+          <ToDoForm
+            submitHandler={handleValidateNewToDo}
+            closeFormHandler={setAddToDoDialogShown}
+          />
+          <button onClick={() => setAddToDoDialogShown(false)}>Annuler</button>
+        </div>
       </div>
     </div>
   );
