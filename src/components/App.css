@@ -43,3 +43,13 @@
 .add-todo-form > * {
   margin: .5em 0em;
 }
+
+.date {
+  font-size: smaller;
+  color: gray;
+  margin: 1em;
+}
+
+.date::before {
+  content: 'Done on '
+}
