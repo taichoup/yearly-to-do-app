@@ -1,7 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+
+interface YearlyToDo {
+  displayName: string,
+  done: boolean,
+  dateDone?: string
+}
 
 function App() {
+  const [yearlyToDos, setYearlyToDos] = useState<YearlyToDo[]>([]);
   return (
     <div className="App">
       <header className="App-header">
