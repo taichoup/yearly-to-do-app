@@ -18,12 +18,14 @@ export const ToDoItem = ({ todo }: ToDoItemProps) => {
   };
   return (
     <li>
-      <input
-        type="checkbox"
-        checked={isDone}
-        onChange={handleToDoCheck}
-      ></input>
-      {todo.displayName}
+      <label className="label">
+        <input
+          type="checkbox"
+          checked={isDone}
+          onChange={handleToDoCheck}
+        ></input>
+        {todo.displayName}
+      </label>
       {isDone && (
         // ?? 0 --> hack
         <span className="date">
