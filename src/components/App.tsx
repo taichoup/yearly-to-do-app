@@ -65,7 +65,11 @@ function App() {
           <ToDoItem todo={todo} key={todo.displayName} />
         ))}
       </ul>
-      <button type="button" onClick={handleAddNewToDo} className='add-todo-button'>
+      <button
+        type="button"
+        onClick={handleAddNewToDo}
+        className="add-todo-button"
+      >
         Ajouter une tâche récurrente
       </button>
       <div className="add-todo-dialog-wrapper">

@@ -27,9 +27,9 @@ export const ToDoForm = ({
   const handleDoneChange = (event: React.FormEvent<HTMLInputElement>): void => {
     // true if checked, false if unchecked
     if (event.currentTarget.value === 'yes') {
-        setDone(true);
+      setDone(true);
     } else {
-        setDone(false);
+      setDone(false);
     }
   };
 
@@ -69,8 +69,24 @@ export const ToDoForm = ({
         id="done"
         checked={done}
       /> */}
-      <label><input type="radio" value="no" checked={!done} onChange={handleDoneChange}/>Non</label>
-      <label><input type="radio" value="yes" checked={done} onChange={handleDoneChange}/>Oui</label>
+      <label>
+        <input
+          type="radio"
+          value="no"
+          checked={!done}
+          onChange={handleDoneChange}
+        />
+        Non
+      </label>
+      <label>
+        <input
+          type="radio"
+          value="yes"
+          checked={done}
+          onChange={handleDoneChange}
+        />
+        Oui
+      </label>
       <button type="submit" onClick={handleSubmit}>
         OK
       </button>
