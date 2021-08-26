@@ -44,6 +44,10 @@ const toDosExampleSet: YearlyToDo[] = [
     displayName: 'vider le compost',
     done: false,
   },
+  {
+    displayName: 'nettoyer les rails des vitres de la véranda',
+    done: false,
+  }
 ];
 
 function App() {
