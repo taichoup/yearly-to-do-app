@@ -47,6 +47,16 @@ const toDosExampleSet: YearlyToDo[] = [
   {
     displayName: 'nettoyer les rails des vitres de la véranda',
     done: false,
+  },
+  {
+    displayName: 'nettoyer la hotte',
+    done: false,
+  },
+  {
+    displayName: 'revisser la poignée de la baie vitrée',
+    done: true,
+    dateDone: 1621034001000,
+    doneBy: 'Manu'
   }
 ];
 
